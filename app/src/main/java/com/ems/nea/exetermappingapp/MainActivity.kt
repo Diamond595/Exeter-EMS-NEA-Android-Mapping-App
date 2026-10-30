@@ -7,13 +7,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.intl.Locale
@@ -53,10 +56,31 @@ class MainActivity : ComponentActivity() {
                     backgroundColour = MaterialTheme.colorScheme.background.toArgb()
                 )
             )
-            ExeterMappingAppTheme {
+            ExeterMappingAppTheme (
+                darkTheme = mainSettings.darkTheme
+            ) {
+                var screen = remember { "home" }
+                Surface() {
+                    Column (
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ){
+                        when (screen) {
+                            "home" ->
+                                TODO()
 
+                            "test" ->
+                                SettingsTest(
+                                    mainSettings,
+                                    mapSettings
+                                )
+
+                            "settings" ->
+
+                        }
+                    }
+                }
             }
         }
-
     }
 }

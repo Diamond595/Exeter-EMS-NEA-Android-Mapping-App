@@ -33,13 +33,13 @@ data class MapSettings (
             return MapSettings(
                 buildingViewDistance = 1f,
                 roadNameViewDistance = 1f,
-                mainRoadColour = Color.argb(255f, 255f, 244f, 79f),
-                motorwayRoadColour = Color.argb(255f, 0f, 255f, 0f),
-                defaultRoadColour = Color.argb(255f, 255f, 255f, 255f),
-                buildingColour = Color.argb(255f, 127f, 127f, 127f),
-                parkColour = Color.argb(255f, 144f, 238f, 144f),
-                waterColour = Color.argb(255f, 118f, 203f, 255f),
-                backgroundColour = Color.argb(255f, 0f, 0f, 0f)
+                mainRoadColour = Color.argb(255, 255, 244, 79),
+                motorwayRoadColour = Color.argb(255, 0, 255, 0),
+                defaultRoadColour = Color.argb(255, 255, 255, 255),
+                buildingColour = Color.argb(255, 127, 127, 127),
+                parkColour = Color.argb(255, 144, 238, 144),
+                waterColour = Color.argb(255, 118, 203, 255),
+                backgroundColour = Color.argb(255, 0, 0, 0)
             )
         }
     }
@@ -66,13 +66,13 @@ class MapSettingsManager(
         MapSettings(
             buildingViewDistance = prefs[Keys.BUILDING_VIEW_DISTANCE] ?: 1f,
             roadNameViewDistance = prefs[Keys.ROAD_NAME_VIEW_DISTANCE] ?: 1f,
-            mainRoadColour = prefs[Keys.MAIN_ROAD_COLOUR] ?: Color.argb(255f, 255f, 244f, 79f),
-            motorwayRoadColour = prefs[Keys.MOTORWAY_ROAD_COLOUR] ?: Color.argb(255f, 0f, 255f, 0f),
-            defaultRoadColour = prefs[Keys.DEFAULT_ROAD_COLOUR] ?: Color.argb(255f, 255f, 255f, 255f),
-            buildingColour = prefs[Keys.BUILDING_COLOUR] ?: Color.argb(255f, 127f, 127f, 127f),
-            parkColour = prefs[Keys.PARK_COLOUR] ?: Color.argb(255f, 144f, 238f, 144f),
-            waterColour = prefs[Keys.WATER_COLOUR] ?: Color.argb(255f, 118f, 203f, 255f),
-            backgroundColour = prefs[Keys.BACKGROUND_COLOUR] ?: Color.argb(255f, 0f, 0f, 0f)
+            mainRoadColour = prefs[Keys.MAIN_ROAD_COLOUR] ?: Color.argb(255, 255, 244, 79),
+            motorwayRoadColour = prefs[Keys.MOTORWAY_ROAD_COLOUR] ?: Color.argb(255, 0, 255, 0),
+            defaultRoadColour = prefs[Keys.DEFAULT_ROAD_COLOUR] ?: Color.argb(255, 255, 255, 255),
+            buildingColour = prefs[Keys.BUILDING_COLOUR] ?: Color.argb(255, 127, 127, 127),
+            parkColour = prefs[Keys.PARK_COLOUR] ?: Color.argb(255, 144, 238, 144),
+            waterColour = prefs[Keys.WATER_COLOUR] ?: Color.argb(255, 118, 203, 255),
+            backgroundColour = prefs[Keys.BACKGROUND_COLOUR] ?: Color.argb(255, 0, 0, 0)
         )
     }
 
@@ -134,7 +134,7 @@ class MapSettingsViewModel(
         }
     }
 
-    fun setRoadNameViewDisatnce(value: Float){
+    fun setRoadNameViewDistance(value: Float){
         viewModelScope.launch {
             settingsManager.setRoadNameViewDistance(value)
         }

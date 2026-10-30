@@ -45,7 +45,7 @@ class MainSettingsManager(
 
     val settingsFlow: Flow<MainSettings> = context.datastoreMain.data.map { prefs ->
         MainSettings(
-            darkTheme = prefs[Keys.DARK_THEME] ?: false,
+            darkTheme = prefs[Keys.DARK_THEME] ?: true,
             textSizeMultiplier = prefs[Keys.TEXT_SIZE_MULTIPLIER] ?: 1f,
             iconStyle = prefs[Keys.ICON_STYLE] ?: 0
         )
