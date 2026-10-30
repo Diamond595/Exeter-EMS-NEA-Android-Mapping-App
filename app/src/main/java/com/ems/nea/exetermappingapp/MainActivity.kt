@@ -57,12 +57,12 @@ class MainActivity : ComponentActivity() {
                 initialValue = MapSettings(
                     buildingViewDistance = 1f,
                     roadNameViewDistance = 1f,
-                    mainRoadColour = Color.argb(255f, 255f, 244f, 79f),
-                    motorwayRoadColour = Color.argb(255f, 0f, 255f, 0f),
-                    defaultRoadColour = Color.argb(255f, 255f, 255f, 255f),
-                    buildingColour = Color.argb(255f, 127f, 127f, 127f),
-                    parkColour = Color.argb(255f, 144f, 238f, 144f),
-                    waterColour = Color.argb(255f, 118f, 203f, 255f),
+                    mainRoadColour = Color.argb(255, 255, 244, 79),
+                    motorwayRoadColour = Color.argb(255, 0, 255, 0),
+                    defaultRoadColour = Color.argb(255, 255, 255, 255),
+                    buildingColour = Color.argb(255, 127, 127, 127),
+                    parkColour = Color.argb(255, 144, 238, 144),
+                    waterColour = Color.argb(255, 118, 203, 255),
                     backgroundColour = MaterialTheme.colorScheme.background.toArgb()
                 )
             )
