@@ -1,4 +1,4 @@
-package com.ems.nea.exetermappingapp.ui.theme
+package com.ems.nea.exetermappingapp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,7 +29,6 @@ import com.ems.nea.exetermappingapp.settings.MainSettingsViewModel
 import com.ems.nea.exetermappingapp.settings.MapSettings
 import com.ems.nea.exetermappingapp.settings.MapSettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.serialization.descriptors.SerialDescriptor
 
 @Composable
 fun SettingsScreen(
@@ -38,33 +41,60 @@ fun SettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(12.dp)
+            .statusBarsPadding()
     ) {
         item {
-            Column (
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        shape = MaterialTheme.shapes.small
-                    )
-            ) {
-                Text(
-                    text = "Main Settings:",
-                    fontSize = (30 * mainSettings.textSizeMultiplier).sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = MaterialTheme.shapes.medium
-                        )
-                )
-            }
+            MainSettingsSection(
+                mainSettings = mainSettings,
+                mainSettingsViewModel = mainSettingsViewModel
+            )
         }
     }
 }
 
 @Composable
-fun DefaultSimpleButton(
+fun MainSettingsSection(
+    mainSettings: MainSettings,
+    mainSettingsViewModel: MainSettingsViewModel = viewModel(factory = MainSettingsViewModel.Factory)
+) {
+    Column(
+        modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.secondary,
+                shape = MaterialTheme.shapes.small
+            )
+    ) {
+        Text(
+            text = "Main Settings:",
+            fontSize = (30 * mainSettings.textSizeMultiplier).sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = MaterialTheme.shapes.medium
+                )
+                .padding(8.dp)
+        )
+        DefaultSimpleButton(
+            click = { mainSettingsViewModel.toggleTheme(!mainSettings.darkTheme) },
+            icon = if (mainSettings.darkTheme) {
+                Icons.Filled.DarkMode
+            } else {
+                Icons.Filled.LightMode
+            },
+            iconContentDescription = "Toggle Theme",
+            title = "Change Theme",
+            content = null,
+            description = "Change the theme of the app between light and dark mode.",
+            settings = mainSettings
+        )
+    }
+}
+
+
+@Composable
+fun DefaultSimpleButton (
     click: (() -> Unit)?,
     icon: ImageVector?,
     iconContentDescription: String,
@@ -84,6 +114,7 @@ fun DefaultSimpleButton(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp)
             .background(
                 color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(16.dp)
@@ -102,7 +133,6 @@ fun DefaultSimpleButton(
         Column(
             verticalArrangement = Arrangement.Top
         ) {
-            // Display the title at size 16
             Text(
                 text = title,
                 fontSize = (16 * settings.textSizeMultiplier).sp
