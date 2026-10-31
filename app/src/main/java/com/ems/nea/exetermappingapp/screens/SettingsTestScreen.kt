@@ -1,4 +1,4 @@
-package com.ems.nea.exetermappingapp
+package com.ems.nea.exetermappingapp.screens
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -9,14 +9,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ems.nea.exetermappingapp.settings.MainSettings
-import com.ems.nea.exetermappingapp.settings.MapSettings
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.alpha
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
+import com.ems.nea.exetermappingapp.settings.MainSettings
+import com.ems.nea.exetermappingapp.settings.MapSettings
 
 
 @Composable

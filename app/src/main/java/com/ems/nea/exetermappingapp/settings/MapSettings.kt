@@ -1,7 +1,7 @@
 package com.ems.nea.exetermappingapp.settings
+import android.app.Application
 import android.content.Context
 import android.graphics.Color
-import android.app.Application
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey

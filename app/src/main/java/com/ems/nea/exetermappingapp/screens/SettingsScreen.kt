@@ -1,4 +1,4 @@
-package com.ems.nea.exetermappingapp
+package com.ems.nea.exetermappingapp.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.DarkMode
@@ -31,20 +30,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.alpha
-import androidx.core.graphics.blue
-import androidx.core.graphics.green
-import androidx.core.graphics.red
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ems.nea.exetermappingapp.settings.MainSettings
 import com.ems.nea.exetermappingapp.settings.MainSettingsViewModel
 import com.ems.nea.exetermappingapp.settings.MapSettings
 import com.ems.nea.exetermappingapp.settings.MapSettingsViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ems.nea.exetermappingapp.uifuns.ColourSelector
 import com.ems.nea.exetermappingapp.uifuns.DefaultSimpleButton
 

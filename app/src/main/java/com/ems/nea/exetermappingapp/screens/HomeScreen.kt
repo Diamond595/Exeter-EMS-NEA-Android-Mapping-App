@@ -1,12 +1,11 @@
-package com.ems.nea.exetermappingapp.ui.theme
+package com.ems.nea.exetermappingapp.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
-
 @Composable
-fun SavedScreen(){
+fun HomeScreen(){
     Text(
-        text = "hi"
+        text = "Hi"
     )
 }
