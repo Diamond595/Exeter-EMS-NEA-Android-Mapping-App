@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,7 @@ import com.ems.nea.exetermappingapp.settings.MainSettingsViewModel
 import com.ems.nea.exetermappingapp.settings.MapSettings
 import com.ems.nea.exetermappingapp.settings.MapSettingsViewModel
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.draw.clip
+import com.ems.nea.exetermappingapp.ui.theme.SavedScreen
 
 class MainActivity : ComponentActivity() {
     val mainSettingsViewModel: MainSettingsViewModel by viewModels { MainSettingsViewModel.Factory }
@@ -49,7 +50,8 @@ class MainActivity : ComponentActivity() {
                 initialValue = MainSettings(
                     darkTheme = isSystemInDarkTheme(),
                     textSizeMultiplier = 1f,
-                    iconStyle = 0
+                    iconStyle = 0,
+                    backgroundColour = MaterialTheme.colorScheme.background.toArgb()
                 )
             )
             val mapSettings by mapSettingsViewModel.settingsFlow.collectAsStateWithLifecycle(
@@ -62,7 +64,6 @@ class MainActivity : ComponentActivity() {
                     buildingColour = Color.argb(255, 127, 127, 127),
                     parkColour = Color.argb(255, 144, 238, 144),
                     waterColour = Color.argb(255, 118, 203, 255),
-                    backgroundColour = MaterialTheme.colorScheme.background.toArgb()
                 )
             )
             ExeterMappingAppTheme (
@@ -74,6 +75,9 @@ class MainActivity : ComponentActivity() {
                     Column (
                         modifier = Modifier
                             .fillMaxSize()
+                            .background(
+                                color = androidx.compose.ui.graphics.Color(mainSettings.backgroundColour),
+                            )
                     ){
                         Box(
                             modifier = Modifier
@@ -88,6 +92,9 @@ class MainActivity : ComponentActivity() {
                                         mainSettings,
                                         mapSettings
                                     )
+
+                                "saved" ->
+                                    SavedScreen()
 
                                 "settings" ->
                                     SettingsScreen(

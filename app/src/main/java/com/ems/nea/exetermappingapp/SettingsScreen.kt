@@ -3,7 +3,6 @@ package com.ems.nea.exetermappingapp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,30 +25,28 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderColors
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.contentType
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColor
-import androidx.core.graphics.toColorInt
+import androidx.core.graphics.alpha
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import com.ems.nea.exetermappingapp.settings.MainSettings
 import com.ems.nea.exetermappingapp.settings.MainSettingsViewModel
 import com.ems.nea.exetermappingapp.settings.MapSettings
 import com.ems.nea.exetermappingapp.settings.MapSettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ems.nea.exetermappingapp.uifuns.ColourSelector
+import com.ems.nea.exetermappingapp.uifuns.DefaultSimpleButton
 
 @Composable
 fun SettingsScreen(
@@ -109,6 +106,7 @@ fun MainSettingsSection(
                 )
                 .padding(8.dp)
         )
+
         DefaultSimpleButton(
             click = { mainSettingsViewModel.toggleTheme(!mainSettings.darkTheme) },
             icon = if (mainSettings.darkTheme) {
@@ -122,6 +120,7 @@ fun MainSettingsSection(
             description = "Change the theme of the app between light and dark mode.",
             settings = mainSettings
         )
+
         DefaultSimpleButton(
             click = null,
             icon = Icons.Filled.TextFields,
@@ -185,6 +184,7 @@ fun MainSettingsSection(
             description = "Change the size of the text in the app.",
             settings = mainSettings
         )
+
         DefaultSimpleButton(
             click = null,
             icon = Icons.Filled.Image,
@@ -236,6 +236,27 @@ fun MainSettingsSection(
             description = "Change how the navigation bar is displayed.",
             settings = mainSettings
         )
+
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Background Colour",
+            title = "Background Colour",
+            content =
+                @Composable {
+                    ColourSelector(
+                        defaultValue = android.graphics.Color.argb(255, 0, 0, 0),
+                        initialValue = mainSettings.backgroundColour,
+                        onValueChange = {
+                            mainSettingsViewModel.setBackgroundColour(it)
+                        },
+                        mainSettings = mainSettings
+                    )
+                },
+            description = "Change the colour of the background on the map.",
+            settings = mainSettings
+        )
+
         Spacer(
             modifier = Modifier
                 .height(4.dp)
@@ -257,7 +278,7 @@ fun MapSettingsSection(
             )
     ) {
         Text(
-            text = "Main Settings:",
+            text = "Map Settings:",
             fontSize = (30 * mainSettings.textSizeMultiplier).sp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -272,84 +293,256 @@ fun MapSettingsSection(
         DefaultSimpleButton(
             click = null,
             icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Building View Distance",
+            title = "Building View Distance",
+            content =
+                @Composable {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
+                        Row(
+                            modifier = Modifier
+                                .weight(8f),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "-",
+                                modifier = Modifier
+                                    .align(alignment = Alignment.CenterVertically)
+                                    .padding(4.dp),
+                                fontSize = 24.sp
+                            )
+                            Slider(
+                                value = mapSettings.buildingViewDistance,
+                                onValueChange = {
+                                    mapSettingsViewModel.setBuildingViewDistance(it)
+                                },
+                                valueRange = 0f..5f,
+                                modifier = Modifier
+                                    .align(alignment = Alignment.CenterVertically),
+                            )
+                            Text(
+                                text = "+",
+                                modifier = Modifier
+                                    .align(alignment = Alignment.CenterVertically)
+                                    .padding(4.dp),
+                                fontSize = 24.sp
+
+                            )
+                        }
+
+                        Icon(
+                            imageVector = Icons.Filled.Replay,
+                            contentDescription = "Reset Text Size",
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(
+                                    shape = MaterialTheme.shapes.small,
+                                )
+                                .clickable(
+                                    onClick = {
+                                        mapSettingsViewModel.setBuildingViewDistance(1f)
+                                    }
+                                )
+                                .weight(2f)
+                                .align(alignment = Alignment.CenterVertically)
+                        )
+                    }
+                },
+            description = "Change at what zoom levels buildings stop rendering.",
+            settings = mainSettings
+        )
+
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Road Name View Distance",
+            title = "Road Name View Distance",
+            content =
+                @Composable {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
+                        Row(
+                            modifier = Modifier
+                                .weight(8f),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "-",
+                                modifier = Modifier
+                                    .align(alignment = Alignment.CenterVertically)
+                                    .padding(4.dp),
+                                fontSize = 24.sp
+                            )
+                            Slider(
+                                value = mapSettings.roadNameViewDistance,
+                                onValueChange = {
+                                    mapSettingsViewModel.setRoadNameViewDistance(it)
+                                },
+                                valueRange = 0f..5f,
+                                modifier = Modifier
+                                    .align(alignment = Alignment.CenterVertically),
+                            )
+                            Text(
+                                text = "+",
+                                modifier = Modifier
+                                    .align(alignment = Alignment.CenterVertically)
+                                    .padding(4.dp),
+                                fontSize = 24.sp
+
+                            )
+                        }
+
+                        Icon(
+                            imageVector = Icons.Filled.Replay,
+                            contentDescription = "Reset Road View Distance Size",
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(
+                                    shape = MaterialTheme.shapes.small,
+                                )
+                                .clickable(
+                                    onClick = {
+                                        mapSettingsViewModel.setRoadNameViewDistance(1f)
+                                    }
+                                )
+                                .weight(2f)
+                                .align(alignment = Alignment.CenterVertically)
+                        )
+                    }
+                },
+            description = "Change at what zoom levels road names stop rendering.",
+            settings = mainSettings
+        )
+
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Main Road Colour",
+            title = "Main Road Colour",
+            content =
+                @Composable {
+                    ColourSelector(
+                        defaultValue = android.graphics.Color.argb(255, 255, 244, 79),
+                        initialValue = mapSettings.mainRoadColour,
+                        onValueChange = {
+                            mapSettingsViewModel.setMainRoadColour(it)
+                        },
+                        mainSettings = mainSettings
+                    )
+                },
+            description = "Change the colour of the main roads on the map.",
+            settings = mainSettings
+        )
+
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Motorway Colour",
+            title = "Motorway Colour",
+            content =
+                @Composable {
+                    ColourSelector(
+                        defaultValue = android.graphics.Color.argb(255, 0, 255, 0),
+                        initialValue = mapSettings.motorwayRoadColour,
+                        onValueChange = {
+                            mapSettingsViewModel.setMotorwayColour(it)
+                        },
+                        mainSettings = mainSettings
+                    )
+                },
+            description = "Change the colour of the motorways on the map.",
+            settings = mainSettings
+        )
+
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
             iconContentDescription = "Change Default Road Colour",
             title = "Default Road Colour",
             content =
             @Composable {
-                Slider(
-                    value = mapSettings.defaultRoadColour.toFloat(),
+                ColourSelector(
+                    defaultValue = android.graphics.Color.argb(255, 255, 255, 255),
+                    initialValue = mapSettings.defaultRoadColour,
                     onValueChange = {
-                        mapSettingsViewModel.setDefaultRoadColour(it.toInt())
+                        mapSettingsViewModel.setDefaultRoadColour(it)
                     },
-                    valueRange = -16777216f..-1f,
-                    modifier = Modifier,
+                    mainSettings = mainSettings
                 )
             },
             description = "Change the colour of the default roads on the map.",
             settings = mainSettings
         )
-    }
-}
 
-@Composable
-fun DefaultSimpleButton (
-    click: (() -> Unit)?,
-    icon: ImageVector?,
-    iconContentDescription: String,
-    title: String,
-    content: @Composable (() -> Unit)?,
-    description: String?,
-    settings: MainSettings
-){
-    val modifier = if (click == null) {
-        Modifier
-    } else {
-        Modifier.clickable(
-            onClick =
-                click
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Building Colour",
+            title = "Building Colour",
+            content =
+                @Composable {
+                    ColourSelector(
+                        defaultValue = android.graphics.Color.argb(255, 127, 127, 127),
+                        initialValue = mapSettings.buildingColour,
+                        onValueChange = {
+                            mapSettingsViewModel.setBuildingColour(it)
+                        },
+                        mainSettings = mainSettings
+                    )
+                },
+            description = "Change the colour of the buildings on the map.",
+            settings = mainSettings
         )
-    }
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = RoundedCornerShape(16.dp)
-            )
-            .padding(all = 8.dp),
-    ) {
-        if (icon != null) {
-            Icon(
-                imageVector = icon,
-                contentDescription = iconContentDescription,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(alignment = Alignment.CenterVertically)
-            )
-        }
-        Column(
-            verticalArrangement = Arrangement.Top
-        ) {
-            Text(
-                text = title,
-                fontSize = (16 * settings.textSizeMultiplier).sp
-            )
 
-            // Display the description with the text slightly transparent
-            if (description != null) {
-                Text(
-                    text = description,
-                    fontSize = (12 * settings.textSizeMultiplier).sp,
-                    color = if (settings.darkTheme) {
-                        Color.White.copy(alpha = 0.9f)
-                    } else {
-                        Color.Black.copy(alpha = 0.9f)
-                    }
-                )
-            }
-            // Display the custom content
-            content?.invoke()
-        }
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Park Colour",
+            title = "Park Colour",
+            content =
+                @Composable {
+                    ColourSelector(
+                        defaultValue = android.graphics.Color.argb(255, 144, 238, 144),
+                        initialValue = mapSettings.parkColour,
+                        onValueChange = {
+                            mapSettingsViewModel.setParkColour(it)
+                        },
+                        mainSettings = mainSettings
+                    )
+                },
+            description = "Change the colour of the parks on the map.",
+            settings = mainSettings
+        )
+
+        DefaultSimpleButton(
+            click = null,
+            icon = Icons.Filled.ColorLens,
+            iconContentDescription = "Change Water Colour",
+            title = "Water Colour",
+            content =
+                @Composable {
+                    ColourSelector(
+                        defaultValue = android.graphics.Color.argb(255, 118, 203, 255),
+                        initialValue = mapSettings.waterColour,
+                        onValueChange = {
+                            mapSettingsViewModel.setWaterColour(it)
+                        },
+                        mainSettings = mainSettings
+                    )
+                },
+            description = "Change the colour of the water on the map.",
+            settings = mainSettings
+        )
+
+        Spacer(
+            modifier = Modifier
+                .height(4.dp)
+        )
     }
 }

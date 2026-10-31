@@ -26,7 +26,6 @@ data class MapSettings (
     val buildingColour: Int,
     val parkColour: Int,
     val waterColour: Int,
-    val backgroundColour: Int
 ) {
     companion object {
         fun default(context: Context): MapSettings {
@@ -39,7 +38,6 @@ data class MapSettings (
                 buildingColour = Color.argb(255, 127, 127, 127),
                 parkColour = Color.argb(255, 144, 238, 144),
                 waterColour = Color.argb(255, 118, 203, 255),
-                backgroundColour = Color.argb(255, 0, 0, 0)
             )
         }
     }
@@ -58,8 +56,6 @@ class MapSettingsManager(
         val BUILDING_COLOUR = intPreferencesKey("building_colour")
         val PARK_COLOUR = intPreferencesKey("park_colour")
         val WATER_COLOUR = intPreferencesKey("water_colour")
-        val BACKGROUND_COLOUR = intPreferencesKey("background_colour")
-
     }
 
     val settingsFlow: Flow<MapSettings> = context.datastoreMap.data.map { prefs ->
@@ -72,7 +68,6 @@ class MapSettingsManager(
             buildingColour = prefs[Keys.BUILDING_COLOUR] ?: Color.argb(255, 127, 127, 127),
             parkColour = prefs[Keys.PARK_COLOUR] ?: Color.argb(255, 144, 238, 144),
             waterColour = prefs[Keys.WATER_COLOUR] ?: Color.argb(255, 118, 203, 255),
-            backgroundColour = prefs[Keys.BACKGROUND_COLOUR] ?: Color.argb(255, 0, 0, 0)
         )
     }
 
@@ -114,11 +109,6 @@ class MapSettingsManager(
     suspend fun setWaterColour(value: Int){
         context.datastoreMap.edit { prefs ->
             prefs[Keys.WATER_COLOUR] = value
-        }
-    }
-    suspend fun setBackgroundColour(value: Int){
-        context.datastoreMap.edit { prefs ->
-            prefs[Keys.BACKGROUND_COLOUR] = value
         }
     }
 }
@@ -173,12 +163,6 @@ class MapSettingsViewModel(
     fun setWaterColour(value: Int){
         viewModelScope.launch {
             settingsManager.setWaterColour(value)
-        }
-    }
-
-    fun setBackgroundColour(value: Int){
-        viewModelScope.launch {
-            settingsManager.setBackgroundColour(value)
         }
     }
 

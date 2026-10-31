@@ -2,6 +2,7 @@ package com.ems.nea.exetermappingapp.settings
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Color
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
@@ -21,7 +22,8 @@ private val Context.datastoreMain by preferencesDataStore(name = "mainSettings")
 data class MainSettings (
     val darkTheme: Boolean,
     val textSizeMultiplier: Float,
-    val iconStyle: Int
+    val iconStyle: Int,
+    val backgroundColour: Int
 ) {
     companion object {
         fun default(context: Context): MainSettings {
@@ -29,6 +31,7 @@ data class MainSettings (
                 darkTheme = true,
                 textSizeMultiplier = 1f,
                 iconStyle = 0,
+                backgroundColour = Color.argb(255, 0, 0, 0)
             )
         }
     }
@@ -41,13 +44,15 @@ class MainSettingsManager(
         val DARK_THEME = booleanPreferencesKey("dark_theme")
         val TEXT_SIZE_MULTIPLIER = floatPreferencesKey("text_size_multiplier")
         val ICON_STYLE = intPreferencesKey("icon_style")
+        val BACKGROUND_COLOUR = intPreferencesKey("background_colour")
     }
 
     val settingsFlow: Flow<MainSettings> = context.datastoreMain.data.map { prefs ->
         MainSettings(
             darkTheme = prefs[Keys.DARK_THEME] ?: true,
             textSizeMultiplier = prefs[Keys.TEXT_SIZE_MULTIPLIER] ?: 1f,
-            iconStyle = prefs[Keys.ICON_STYLE] ?: 0
+            iconStyle = prefs[Keys.ICON_STYLE] ?: 0,
+            backgroundColour = prefs[Keys.BACKGROUND_COLOUR] ?: Color.argb(255, 0, 0, 0)
         )
     }
 
@@ -66,6 +71,12 @@ class MainSettingsManager(
     suspend fun setIconStyle(iconStyle: Int){
         context.datastoreMain.edit { prefs ->
             prefs[Keys.ICON_STYLE] = iconStyle
+        }
+    }
+
+    suspend fun setBackgroundColour(value: Int){
+        context.datastoreMain.edit { prefs ->
+            prefs[Keys.BACKGROUND_COLOUR] = value
         }
     }
 }
@@ -90,6 +101,12 @@ class MainSettingsViewModel(
     fun setIconStyle(iconStyle: Int){
         viewModelScope.launch {
             settingsManager.setIconStyle(iconStyle)
+        }
+    }
+
+    fun setBackgroundColour(value: Int){
+        viewModelScope.launch {
+            settingsManager.setBackgroundColour(value)
         }
     }
 
