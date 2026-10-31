@@ -16,8 +16,10 @@ import androidx.core.graphics.green
 import androidx.core.graphics.red
 import com.ems.nea.exetermappingapp.settings.MainSettings
 import com.ems.nea.exetermappingapp.settings.MapSettings
+import org.jetbrains.annotations.TestOnly
 
 
+@TestOnly
 @Composable
 fun SettingsTest(
     mainSettings: MainSettings,

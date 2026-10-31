@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ems.nea.exetermappingapp.screens.ErrorScreen
 import com.ems.nea.exetermappingapp.screens.HomeScreen
 import com.ems.nea.exetermappingapp.screens.SavedScreen
 import com.ems.nea.exetermappingapp.screens.SettingsScreen
@@ -93,6 +94,10 @@ class MainActivity : ComponentActivity() {
                                     SettingsScreen(
                                         mainSettings = mainSettings,
                                         mapSettings = mapSettings,
+                                    )
+                                else ->
+                                    ErrorScreen(
+                                        screenName = screen
                                     )
                             }
                         }
