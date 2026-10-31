@@ -124,7 +124,7 @@ fun BottomBar(
             selected = screen == "home",
             onClick = { onScreenChange("home") },
             icon = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 3) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
                     Icon(
                         imageVector = Icons.Filled.Home,
                         contentDescription = "Home"
@@ -132,7 +132,7 @@ fun BottomBar(
                 }
             },
             label = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 1) {
                     Text(
                         text = "Home",
                         fontSize = (12 * mainSettings.textSizeMultiplier).sp
@@ -144,7 +144,7 @@ fun BottomBar(
             selected = screen == "test",
             onClick = { onScreenChange("test") },
             icon = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 3) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
                     Icon(
                         imageVector = Icons.Filled.Build,
                         contentDescription = "Test"
@@ -152,7 +152,7 @@ fun BottomBar(
                 }
             },
             label = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 1) {
                     Text(
                         text = "Test",
                         fontSize = (12 * mainSettings.textSizeMultiplier).sp
@@ -164,7 +164,7 @@ fun BottomBar(
             selected = screen == "saved",
             onClick = { onScreenChange("saved") },
             icon = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 3) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
                     Icon(
                         imageVector = Icons.Filled.AddBox,
                         contentDescription = "Saved"
@@ -172,7 +172,7 @@ fun BottomBar(
                 }
             },
             label = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 1) {
                     Text(
                         text = "Saved",
                         fontSize = (12 * mainSettings.textSizeMultiplier).sp
@@ -184,7 +184,7 @@ fun BottomBar(
             selected = screen == "settings",
             onClick = { onScreenChange("settings") },
             icon = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 3) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
                         contentDescription = "Settings"
@@ -192,7 +192,7 @@ fun BottomBar(
                 }
             },
             label = {
-                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 2) {
+                if (mainSettings.iconStyle == 0 || mainSettings.iconStyle == 1) {
                     Text(
                         text = "Settings",
                         fontSize = (12 * mainSettings.textSizeMultiplier).sp
